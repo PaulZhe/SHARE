@@ -1,0 +1,245 @@
+//
+//  ViewControllerLogin.m
+//  SHARE
+//
+//  Created by 小哲的DELL on 2018/7/28.
+//  Copyright © 2018年 小哲的DELL. All rights reserved.
+//
+
+#import "ViewControllerLogin.h"
+#import "ViewControllerRegister.h"
+#import "AppDelegate.h"
+#import "ViewControllerSearch.h"
+#import "ViewControllerPassage.h"
+#import "ViewControllerActivity.h"
+#import "ViewControllerHomePage.h"
+#import "ViewControllerPersonalMessage.h"
+
+@interface ViewControllerLogin ()
+
+@end
+
+@implementation ViewControllerLogin
+
+@synthesize startImageView;
+@synthesize userTextField;
+@synthesize passTextField;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    //设置状态栏为白色
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    //设置背景logo
+    UIImage *logoImage = [UIImage imageNamed:@"login_logo"];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:logoImage];
+    logoImageView.frame = CGRectMake(150, 100, 114, 114);
+    [self.view addSubview:logoImageView];
+    
+    UILabel *labelLogo = [[UILabel alloc] init];
+    labelLogo.text = @"SHARE";
+    labelLogo.textColor = [UIColor whiteColor];
+    labelLogo.frame = CGRectMake(150, 220, 114, 40);
+    labelLogo.font = [UIFont systemFontOfSize:36];
+    [self.view addSubview:labelLogo];
+    
+    //设置textField
+    userTextField = [[UITextField alloc] init];
+    passTextField = [[UITextField alloc] init];
+    userTextField.frame = CGRectMake(44, 305, 326, 50);
+    passTextField.frame = CGRectMake(44, 365, 326, 50);
+    userTextField.borderStyle = UITextBorderStyleRoundedRect;
+    passTextField.borderStyle = UITextBorderStyleRoundedRect;
+    userTextField.placeholder = @"请输入用户名";
+    passTextField.placeholder = @"请输入密码";
+    passTextField.secureTextEntry = YES;
+    
+    UIImage *userImage = [UIImage imageNamed:@"user"];
+    UIImage *passImage = [UIImage imageNamed:@"pass"];
+    UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
+    UIImageView *passImageView = [[UIImageView alloc] initWithImage:passImage];
+    
+    userTextField.leftView = userImageView;
+    passTextField.leftView = passImageView;
+    userTextField.leftViewMode = UITextFieldViewModeAlways;
+    passTextField.leftViewMode = UITextFieldViewModeAlways;
+    [self.view addSubview:userTextField];
+    [self.view addSubview:passTextField];
+    
+    //设置button
+    UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *passButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [loginButton setTitle:@"登录" forState:UIControlStateNormal];
+    [passButton setTitle:@"注册" forState:UIControlStateNormal];
+    loginButton.frame = CGRectMake(84, 455, 109, 45);
+    passButton.frame = CGRectMake(221, 455, 109, 45);
+    [loginButton setTintColor:[UIColor whiteColor]];
+    [passButton setTintColor:[UIColor whiteColor]];
+    [passButton addTarget:self action:@selector(passButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [loginButton addTarget:self action:@selector(loginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    //设置按钮边框
+    [loginButton.layer setMasksToBounds:YES];
+    [loginButton.layer setCornerRadius:10.0];
+    [loginButton.layer setBorderWidth:1.5];
+    [passButton.layer setMasksToBounds:YES];
+    [passButton.layer setCornerRadius:10.0];
+    [passButton.layer setBorderWidth:1.5];
+    loginButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    passButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    loginButton.titleLabel.font = [UIFont systemFontOfSize:27];
+    passButton.titleLabel.font = [UIFont systemFontOfSize:27];
+    [self.view addSubview:loginButton];
+    [self.view addSubview:passButton];
+    
+    //设置checkbox
+    UIButton *checkBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *uncheckedImage = [UIImage imageNamed:@"checkbox_unchecked"];
+    UIImage *checkedImage = [UIImage imageNamed:@"checkbox_checked"];
+    [checkBoxButton setImage:uncheckedImage forState:UIControlStateNormal];
+    [checkBoxButton setImage:checkedImage forState:UIControlStateSelected];
+    [checkBoxButton addTarget:self action:@selector(checkBoxClick:) forControlEvents:UIControlEventTouchUpInside];
+    checkBoxButton.frame = CGRectMake(44, 520, 15, 15);
+    [self.view addSubview:checkBoxButton];
+    
+    UILabel *checkBoxLable = [[UILabel alloc] initWithFrame:CGRectMake(64, 517, 64, 15)];
+    checkBoxLable.text = @"自动登录";
+    [checkBoxLable sizeToFit];
+    checkBoxLable.textColor = [UIColor colorWithRed:0.00f green:0.35f blue:0.62f alpha:1.00f];
+    [self.view addSubview:checkBoxLable];
+    
+    //开机页面
+    UIImage *startImage = [UIImage imageNamed:@"开机界面.jpg"];
+    startImageView = [[UIImageView alloc] initWithImage:startImage];
+    startImageView.frame = self.view.bounds;
+    [self.view addSubview:startImageView];
+
+    //设置定时器
+    NSTimer *timer = [[NSTimer alloc] init];
+    timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(stopTimer:) userInfo:nil repeats:NO];
+    
+     //Do any additional setup after loading the view.
+}
+
+-(void)checkBoxClick:(UIButton *)checkBoxButton
+{
+    checkBoxButton.selected = !checkBoxButton.selected;
+}
+
+-(void)loginButtonClick{
+    //创建首页的视图控制器
+    ViewControllerHomePage *vcHomePage = [[ViewControllerHomePage alloc] init];
+    ViewControllerSearch *vcSearch = [[ViewControllerSearch alloc] init];
+    ViewControllerPassage *vcPassage = [[ViewControllerPassage alloc] init];
+    ViewControllerActivity *vcActivity = [[ViewControllerActivity alloc] init];
+    ViewControllerPersonalMessage *vcPersonalMessage = [[ViewControllerPersonalMessage alloc] init];
+    
+    //设置导航控制器
+    UINavigationController *ncHomePage = [[UINavigationController alloc] initWithRootViewController:vcHomePage];
+    UINavigationController *ncSearch = [[UINavigationController alloc] initWithRootViewController:vcSearch];
+    UINavigationController *ncPassage = [[UINavigationController alloc] initWithRootViewController:vcPassage];
+    UINavigationController *ncActivity = [[UINavigationController alloc] initWithRootViewController:vcActivity];
+    UINavigationController *ncPersonalMessage = [[UINavigationController alloc] initWithRootViewController:vcPersonalMessage];
+    
+    //设置导航栏控制器背景
+    ncHomePage.navigationBar.barTintColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    vcHomePage.title = @"SHARE";
+    [ncHomePage.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    ncSearch.navigationBar.barTintColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    vcSearch.title = @"搜索";
+    [ncSearch.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    ncPassage.navigationBar.barTintColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    vcPassage.title = @"文章";
+    [ncPassage.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    ncActivity.navigationBar.barTintColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    vcActivity.title = @"活动";
+    [ncActivity.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    ncPersonalMessage.navigationBar.barTintColor = [UIColor colorWithRed:0.12f green:0.54f blue:0.80f alpha:1.00f];
+    vcPersonalMessage.title = @"个人信息";
+    [ncPersonalMessage.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    //创建标签控制器
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    NSArray *arrayVC = [NSArray arrayWithObjects:ncHomePage, ncSearch, ncPassage, ncActivity, ncPersonalMessage, nil];
+    tabBarController.viewControllers = arrayVC;
+    tabBarController.tabBar.translucent = NO;
+    
+    UIImage *homePageImage1 = [UIImage imageNamed:@"button1_normal"];
+    UIImage *homePageImage2 = [UIImage imageNamed:@"button1_pressed"];
+    UIImage *searchImage1 = [UIImage imageNamed:@"button2_normal"];
+    UIImage *searchImage2 = [UIImage imageNamed:@"button2_pressed"];
+    UIImage *passageImage1 = [UIImage imageNamed:@"button3_normal"];
+    UIImage *passageImage2 = [UIImage imageNamed:@"button3_pressed"];
+    UIImage *activityImage1 = [UIImage imageNamed:@"button4_normal"];
+    UIImage *activityImage2 = [UIImage imageNamed:@"button4_pressed"];
+    UIImage *personalMessageImage1 = [UIImage imageNamed:@"button5_normal"];
+    UIImage *personalMessageImage2 = [UIImage imageNamed:@"button5_pressed"];
+    
+    //创建分栏控制器图标，后两行代码是对图片的渲染，否则出来的图片是一片蓝
+    vcHomePage.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:homePageImage1 selectedImage:homePageImage2];
+    vcHomePage.tabBarItem.selectedImage = [homePageImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vcHomePage.tabBarItem.image = [homePageImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    vcSearch.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:searchImage1 selectedImage:searchImage2];
+    vcSearch.tabBarItem.selectedImage = [searchImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vcSearch.tabBarItem.image = [searchImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    vcPassage.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:passageImage1 selectedImage:passageImage2];
+    vcPassage.tabBarItem.selectedImage = [passageImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vcPassage.tabBarItem.image = [passageImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    vcActivity.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:activityImage1 selectedImage:activityImage2];
+    vcActivity.tabBarItem.selectedImage = [activityImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vcActivity.tabBarItem.image = [activityImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    vcPersonalMessage.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:personalMessageImage1 selectedImage:personalMessageImage2];
+    vcPersonalMessage.tabBarItem.image = [personalMessageImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vcPersonalMessage.tabBarItem.selectedImage = [personalMessageImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    
+    [self presentViewController:tabBarController animated:YES completion:nil];
+}
+
+-(void)passButtonClick{
+    ViewControllerRegister *vcRegister = [[ViewControllerRegister alloc] init];
+    [self presentViewController:vcRegister animated:YES completion:nil];
+}
+
+-(void)stopTimer:(NSTimer *) timer
+{
+    if(timer != nil){
+        startImageView.hidden = YES;
+        [timer invalidate];
+    }
+}
+
+//点击屏幕空白处调用此函数
+-(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    //使虚拟键盘回收，不再作为第一消息响应
+    [self.userTextField resignFirstResponder];
+    [self.passTextField resignFirstResponder];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
