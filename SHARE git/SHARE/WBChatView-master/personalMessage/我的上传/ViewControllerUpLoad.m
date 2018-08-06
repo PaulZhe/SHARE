@@ -23,7 +23,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     //设置导航栏
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:nil];self.navigationItem.leftBarButtonItem = item;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(pop)];
+    self.navigationItem.leftBarButtonItem = item;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:22],NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
@@ -47,6 +48,7 @@
     [segmentedControl setTitleTextAttributes:dic1 forState:UIControlStateNormal];
     [segmentedControl setTitleTextAttributes:dic2 forState:UIControlStateSelected];
     segmentedControl.frame = CGRectMake(0, 64, 414, 41);
+    segmentedControl.selectedSegmentIndex = 0;
     
     [segmentedControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentedControl];
@@ -69,7 +71,7 @@
 -(void)initBackGroundView
 {
     //tableView后的滚动条
-    _scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 105, 414, 571)];
+    _scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 105, 414, 631)];
     _scrollView.contentSize=CGSizeMake(414*3, 615);
     _scrollView.delegate=self;
     _scrollView.pagingEnabled=YES;
@@ -78,14 +80,14 @@
     _scrollView.directionalLockEnabled = YES;
     [self.view addSubview:_scrollView];
     //tableView1
-    _tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 10, 414, 571)];
+    _tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 10, 414, 631)];
     _tableView.tag=1;
     _tableView.delegate=self;
     _tableView.dataSource=self;
     _tableView.scrollEnabled=NO;
     [_scrollView addSubview:_tableView];
     //tableView2
-    _tableView2=[[UITableView alloc]initWithFrame:CGRectMake(418, 10, 414, 571)];
+    _tableView2=[[UITableView alloc]initWithFrame:CGRectMake(418, 10, 414, 631)];
     _tableView2.tag=2;
     _tableView2.delegate=self;
     _tableView2.dataSource=self;

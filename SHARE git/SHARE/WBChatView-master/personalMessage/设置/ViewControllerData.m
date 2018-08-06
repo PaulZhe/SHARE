@@ -100,8 +100,12 @@
         [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn2 setTitle:@"女" forState:UIControlStateNormal];
         [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn1 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateNormal];
+        [btn1 setImage:[UIImage imageNamed:@"girl_button"] forState:UIControlStateNormal];
         [btn2 setImage:[UIImage imageNamed:@"girl_button"] forState:UIControlStateNormal];
+        [btn1 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateSelected];
+        [btn2 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateSelected];
+        [btn1 addTarget:self action:@selector(press:) forControlEvents:UIControlEventTouchUpInside];
+        [btn2 addTarget:self action:@selector(press:) forControlEvents:UIControlEventTouchUpInside];
         btn1.frame = CGRectMake(110, 15, 50, 20);
         btn2.frame = CGRectMake(180, 15, 50, 20);
         [cell1.contentView addSubview:btn2];
@@ -126,6 +130,10 @@
 - (void)pop
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)press:(UIButton *) btn{
+    btn.selected = !btn.selected;
 }
 
 //设置选中Cell的响应事件

@@ -15,8 +15,10 @@
     if(self){
         //创建一个文本输入区对象
         self.textField = [[UITextField alloc] init];
+        self.label = [[UILabel alloc] init];
 
         [self addSubview:self.textField];
+        [self addSubview:self.label];
     }
     return self;
 }
@@ -25,8 +27,8 @@
     [super layoutSubviews];
     
     //确定文本输入区的位置
-    self.textField.frame = CGRectMake(40, 0, 374, 50);
-    
+    self.textField.frame = CGRectMake(120, 0, 296, 50);
+    self.label.frame = CGRectMake(40, 10, 70, 30);
     //设置字体的颜色
     self.textField.textColor = [UIColor blackColor];
     

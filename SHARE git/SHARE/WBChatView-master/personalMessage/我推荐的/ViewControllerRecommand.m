@@ -27,7 +27,7 @@
     self.navigationItem.leftBarButtonItem = item;
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(7, 64, 400, 616) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(7, 64, 400, 676) style:UITableViewStyleGrouped];
     [self.tableView registerClass:[HomePageTableViewCell class] forCellReuseIdentifier:@"homePageCell"];
     
     self.tableView.delegate = self;

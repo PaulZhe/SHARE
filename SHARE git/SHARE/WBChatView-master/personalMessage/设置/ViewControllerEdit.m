@@ -94,28 +94,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0 && indexPath.row == 0){
         ViewControllerData *vcData = [[ViewControllerData alloc]init];
+        vcData.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcData animated:YES];
     } else if(indexPath.section == 0 && indexPath.row == 1){
         ViewControllerPassword *vcPassword = [[ViewControllerPassword alloc] init];
+        vcPassword.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcPassword animated:YES];
     } else if(indexPath.section == 0 && indexPath.row == 2){
         ViewControllerMessageedit *vcMessageedit = [[ViewControllerMessageedit alloc] init];
+        vcMessageedit.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcMessageedit animated:YES];
     } else if(indexPath.section == 0 && indexPath.row == 4){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"清除缓存" message:@"删除数据将不可恢复" preferredStyle: UIAlertControllerStyleActionSheet];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        
-        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"清除" style:UIAlertActionStyleDestructive handler:nil];
-        
-        [alertController addAction:cancelAction];
-        
-        [alertController addAction:deleteAction];
-        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"已清除缓存" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        alertController.view.tintColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.25f alpha:1.00f];
         [self presentViewController:alertController animated:YES completion:nil];
+        
+        [self performSelector:@selector(clean:) withObject:alertController afterDelay:1.5];
     } else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     }
 }
+
+-(void)clean:(UIAlertController *)alert{
+    [alert dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -11,5 +11,6 @@
 @interface PasswordTableViewCell : UITableViewCell
 
 @property (retain,nonatomic) UITextField* textField;
+@property (nonatomic) UILabel* label;
 
 @end

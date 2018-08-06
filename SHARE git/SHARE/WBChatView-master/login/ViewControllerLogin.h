@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewControllerLogin : UIViewController
-
+@interface ViewControllerLogin : UIViewController{
+    UITextField *userTextField1;
+    UITextField *passTextField1;
+}
 @property UIImageView *startImageView;
-@property(nonatomic) UITextField *userTextField;
-@property(nonatomic) UITextField *passTextField;
-
 @end
 

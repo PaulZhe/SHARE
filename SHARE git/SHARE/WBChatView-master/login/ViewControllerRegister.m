@@ -7,7 +7,7 @@
 //
 
 #import "ViewControllerRegister.h"
-
+#import "ViewControllerLogin.h"
 
 @interface ViewControllerRegister ()
 
@@ -84,6 +84,18 @@
     [self.view addSubview:registerButton];
     
     // Do any additional setup after loading the view.
+}
+
+//把传进来的Block语句块保存到本类的实例变量returnTextBlock（.h中定义的属性）中，然后寻找一个时机调用
+-(void)returnText:(ReturnTextBlock)block{
+    self.returnTextBlock = block;
+}
+//而这个时机就是当视图将要消失的时候，需要重写：
+-(void)viewWillDisappear:(BOOL)animated{
+    if (self.returnTextBlock !=nil) {
+        self.returnTextBlock(self.userTextField.text,self.passTextField.text);
+        
+    }
 }
 
 -(void)registerButtonClick

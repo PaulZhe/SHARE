@@ -22,8 +22,6 @@
 @implementation ViewControllerLogin
 
 @synthesize startImageView;
-@synthesize userTextField;
-@synthesize passTextField;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,27 +44,27 @@
     [self.view addSubview:labelLogo];
     
     //设置textField
-    userTextField = [[UITextField alloc] init];
-    passTextField = [[UITextField alloc] init];
-    userTextField.frame = CGRectMake(44, 305, 326, 50);
-    passTextField.frame = CGRectMake(44, 365, 326, 50);
-    userTextField.borderStyle = UITextBorderStyleRoundedRect;
-    passTextField.borderStyle = UITextBorderStyleRoundedRect;
-    userTextField.placeholder = @"请输入用户名";
-    passTextField.placeholder = @"请输入密码";
-    passTextField.secureTextEntry = YES;
+    userTextField1 = [[UITextField alloc] init];
+    passTextField1 = [[UITextField alloc] init];
+    userTextField1.frame = CGRectMake(44, 305, 326, 50);
+    passTextField1.frame = CGRectMake(44, 365, 326, 50);
+    userTextField1.borderStyle = UITextBorderStyleRoundedRect;
+    passTextField1.borderStyle = UITextBorderStyleRoundedRect;
+    userTextField1.placeholder = @"请输入用户名";
+    passTextField1.placeholder = @"请输入密码";
+    passTextField1.secureTextEntry = YES;
     
     UIImage *userImage = [UIImage imageNamed:@"user"];
     UIImage *passImage = [UIImage imageNamed:@"pass"];
     UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
     UIImageView *passImageView = [[UIImageView alloc] initWithImage:passImage];
     
-    userTextField.leftView = userImageView;
-    passTextField.leftView = passImageView;
-    userTextField.leftViewMode = UITextFieldViewModeAlways;
-    passTextField.leftViewMode = UITextFieldViewModeAlways;
-    [self.view addSubview:userTextField];
-    [self.view addSubview:passTextField];
+    userTextField1.leftView = userImageView;
+    passTextField1.leftView = passImageView;
+    userTextField1.leftViewMode = UITextFieldViewModeAlways;
+    passTextField1.leftViewMode = UITextFieldViewModeAlways;
+    [self.view addSubview:userTextField1];
+    [self.view addSubview:passTextField1];
     
     //设置button
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -208,6 +206,11 @@
 
 -(void)passButtonClick{
     ViewControllerRegister *vcRegister = [[ViewControllerRegister alloc] init];
+    //回调方法将输入框中的数据 传输过来
+    [vcRegister returnText:^(NSString *showText,NSString *showText1) {
+        userTextField1.text = showText;
+        passTextField1.text = showText1;
+    }];
     [self presentViewController:vcRegister animated:YES completion:nil];
 }
 
@@ -223,8 +226,8 @@
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     //使虚拟键盘回收，不再作为第一消息响应
-    [self.userTextField resignFirstResponder];
-    [self.passTextField resignFirstResponder];
+    [userTextField1 resignFirstResponder];
+    [passTextField1 resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

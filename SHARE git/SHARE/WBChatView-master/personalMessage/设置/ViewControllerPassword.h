@@ -10,4 +10,7 @@
 
 @interface ViewControllerPassword : UIViewController
 
+@property(nonatomic) UITextField *passwordTextField1;
+@property(nonatomic) UITextField *passwordTextField2;
+
 @end

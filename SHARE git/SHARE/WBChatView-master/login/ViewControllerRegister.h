@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^ReturnTextBlock)(NSString *showText,NSString *showText1);//重新定义了一个名字
+
 @interface ViewControllerRegister : UIViewController
 
-@property(nonatomic) UITextField *userTextField;
-@property(nonatomic) UITextField *passTextField;
-@property(nonatomic) UITextField *emailTextField;
-
+@property(nonatomic,retain) UITextField *userTextField;
+@property(nonatomic,retain) UITextField *passTextField;
+@property(nonatomic,retain) UITextField *emailTextField;
+@property (nonatomic,copy) ReturnTextBlock returnTextBlock;//定义的一个Block属性
+-(void)returnText:(ReturnTextBlock)block;
 @end

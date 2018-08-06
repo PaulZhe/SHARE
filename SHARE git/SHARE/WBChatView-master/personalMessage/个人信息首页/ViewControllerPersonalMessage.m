@@ -171,15 +171,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 1 && indexPath.row == 0){
         ViewControllerUpLoad *vcUpLoad = [[ViewControllerUpLoad alloc]init];
+        vcUpLoad.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcUpLoad animated:YES];
     } else if(indexPath.section == 1 && indexPath.row == 1){
         ViewControllerMessage *vcMessage = [[ViewControllerMessage alloc] init];
+        vcMessage.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcMessage animated:YES];
     } else if(indexPath.section == 1 && indexPath.row == 2){
         ViewControllerRecommand *vcRecommand = [[ViewControllerRecommand alloc] init];
+        vcRecommand.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcRecommand animated:YES];
     } else if(indexPath.section == 1 && indexPath.row == 4){
         ViewControllerEdit *vcEdit = [[ViewControllerEdit alloc] init];
+        vcEdit.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vcEdit animated:YES];
     } else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
