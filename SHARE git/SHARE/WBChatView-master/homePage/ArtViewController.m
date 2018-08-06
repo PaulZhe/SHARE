@@ -33,7 +33,7 @@
     self.tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-//    self.hidesBottomBarWhenPushed = NO;
+    
     // Do any additional setup after loading the view.
 }
 
